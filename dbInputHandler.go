@@ -19,7 +19,7 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 	command := commands.Get(0)
 	key := commands.Get(1)
 	val := commands.Get(2)
-	if command != "exit" && key == ""{
+	if command != "exit" && key == "" && command != "SPOP" && command != "QPOP"{
 		return "no key"
 	}
 	if command == "" {
