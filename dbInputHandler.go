@@ -28,9 +28,6 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 	switch command[0] {                        //создаем контейнер под используемый логин, если еще не создали (в го нет конструкторов)
 	case 'H':
 		{
-			if val == ""{
-				return "no value"
-			}
 			if db.HashMap[password] == nil {
 				db.HashMap[password] = new(HashMap)
 			}
@@ -63,6 +60,9 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 	switch command {                                   //здесь есть команды из лабы 1, ее еще пишу
 	case "HSET":
 		{
+			if val == "" {
+				return "no value"
+			}
 			err := db.HashMap[password].Set(key, val)
 			if err != nil {
 				return err.Error()
