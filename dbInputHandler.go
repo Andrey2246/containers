@@ -1,11 +1,21 @@
-package main
+package containers
 
 import (
 	"strconv"
-	containers "github.com/Andrey2246/containers"
+	"sync"
 )
 
-func (db *DataBase) execute(commands *containers.Arr, password string) string {
+type DataBase struct {
+	s     map[string]*Stack
+	h     map[string]*HashMap
+	q     map[string]*Queue
+	set   map[string]*Set
+	b     map[string]*Bst
+	a     map[string]*Arr
+	mutex sync.Mutex
+}
+
+func (db *DataBase) Execute(commands *Arr, password string) string {
 	command := commands.Get(0)
 	key := commands.Get(1)
 	val := commands.Get(2)
@@ -22,31 +32,31 @@ func (db *DataBase) execute(commands *containers.Arr, password string) string {
 				return "no value"
 			}
 			if db.h[password] == nil {
-				db.h[password] = new(containers.HashMap)
+				db.h[password] = new(HashMap)
 			}
 		}
 	case 'S':
 		{
 			if command[1] != 'P' && db.set[password] == nil { // SP => SPUSH || SPOP
-				db.set[password] = new(containers.Set)
+				db.set[password] = new(Set)
 			} else if db.s[password] == nil {
-				db.s[password] = new(containers.Stack)
+				db.s[password] = new(Stack)
 			}
 		}
 	case 'B':
 		{
 			if db.b[password] == nil {
-				db.b[password] = new(containers.Bst)
+				db.b[password] = new(Bst)
 			}
 		}
 	case 'Q':
 		if db.q[password] == nil {
-			db.q[password] = new(containers.Queue)
+			db.q[password] = new(Queue)
 		}
 	case 'A':
 		{
 			if db.a[password] == nil {
-				db.a[password] = new(containers.Arr)
+				db.a[password] = new(Arr)
 			}
 		}
 	}
