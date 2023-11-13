@@ -31,46 +31,46 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 			if val == ""{
 				return "no value"
 			}
-			if db.h[password] == nil {
-				db.h[password] = new(HashMap)
+			if db.HashMap[password] == nil {
+				db.HashMap[password] = new(HashMap)
 			}
 		}
 	case 'S':
 		{
-			if command[1] != 'P' && db.set[password] == nil { // SP => SPUSH || SPOP
-				db.set[password] = new(Set)
-			} else if db.s[password] == nil {
-				db.s[password] = new(Stack)
+			if command[1] != 'P' && db.Set[password] == nil { // SP => SPUSH || SPOP
+				db.Set[password] = new(Set)
+			} else if db.Stack[password] == nil {
+				db.Stack[password] = new(Stack)
 			}
 		}
 	case 'B':
 		{
-			if db.b[password] == nil {
-				db.b[password] = new(Bst)
+			if db.BST[password] == nil {
+				db.BST[password] = new(Bst)
 			}
 		}
 	case 'Q':
-		if db.q[password] == nil {
-			db.q[password] = new(Queue)
+		if db.Queue[password] == nil {
+			db.Queue[password] = new(Queue)
 		}
 	case 'A':
 		{
-			if db.a[password] == nil {
-				db.a[password] = new(Arr)
+			if db.Array[password] == nil {
+				db.Array[password] = new(Arr)
 			}
 		}
 	}
 	switch command {                                   //здесь есть команды из лабы 1, ее еще пишу
 	case "HSET":
 		{
-			err := db.h[password].Set(key, val)
+			err := db.HashMap[password].Set(key, val)
 			if err != nil {
 				return err.Error()
 			}
 		}
 	case "HGET":
 		{
-			st, err := db.h[password].Get(key)
+			st, err := db.HashMap[password].Get(key)
 			if err != nil {
 				return err.Error()
 			} else {
@@ -79,18 +79,18 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 		}
 	case "HDEL":
 		{
-			err := db.h[password].Del(key)
+			err := db.HashMap[password].Del(key)
 			if err != nil {
 				return err.Error()
 			}
 		}
 	case "SPUSH":
 		{
-			db.s[password].Push(key)
+			db.Stack[password].Push(key)
 		}
 	case "SPOP":
 		{
-			st, err := db.s[password].Pop()
+			st, err := db.Stack[password].Pop()
 			if err != nil {
 				return err.Error()
 			} else {
@@ -99,11 +99,11 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 		}
 	case "QPUSH":
 		{
-			db.q[password].Push(key)
+			db.Queue[password].Push(key)
 		}
 	case "QPOP":
 		{
-			st, err := db.q[password].Pop()
+			st, err := db.Queue[password].Pop()
 			if err != nil {
 				return err.Error()
 			} else {
@@ -112,25 +112,25 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 		}
 	case "BADD":
 		{
-			err := db.b[password].Add(key)
+			err := db.BST[password].Add(key)
 			if err != nil {
 				return err.Error()
 			}
 		}
 	case "BPRINT":
 		{
-			return db.b[password].Print()
+			return db.BST[password].Print()
 		}
 	case "BDEL":
 		{
-			err := db.b[password].Del(key)
+			err := db.BST[password].Del(key)
 			if err != nil {
 				return err.Error()
 			}
 		}
 	case "BISMEM":
 		{
-			if db.b[password].IsMem(key) {
+			if db.BST[password].IsMem(key) {
 				return ("Your tree contains value\"" + key + "\"")
 			} else {
 				return ("Your tree does not contain value\"" + key + "\"")
@@ -139,7 +139,7 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 	case "ASET":
 		{
 			keyInt, _ := strconv.Atoi(key)
-			db.a[password].Set(keyInt, val)
+			db.Array[password].Set(keyInt, val)
 		}
 	case "AGET":
 		{
@@ -147,26 +147,26 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 			if err != nil {
 				return "key to array is an integer number, not" + key
 			} else {
-				db.a[password].Get(keyI)
+				db.Array[password].Get(keyI)
 			}
 		}
 	case "SADD":
 		{
-			err := db.set[password].ADD(key)
+			err := db.Set[password].ADD(key)
 			if err != nil {
 				return err.Error()
 			}
 		}
 	case "SREM":
 		{
-			err := db.set[password].Rem(key)
+			err := db.Set[password].Rem(key)
 			if err != nil {
 				return err.Error()
 			}
 		}
 	case "SISMEM":
 		{
-			ans := db.set[password].IsMem(key)
+			ans := db.Set[password].IsMem(key)
 			if ans {
 				return "Your set contains value \"" + key + "\""
 			}
