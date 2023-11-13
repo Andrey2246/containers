@@ -6,13 +6,13 @@ import (
 )
 
 type DataBase struct {
-	s     map[string]*Stack
-	h     map[string]*HashMap
-	q     map[string]*Queue
-	set   map[string]*Set
-	b     map[string]*Bst
-	a     map[string]*Arr
-	mutex sync.Mutex
+	Stack     map[string]*Stack
+	HashMap     map[string]*HashMap
+	Queue    map[string]*Queue
+	Set   map[string]*Set
+	BST    map[string]*Bst
+	Array    map[string]*Arr
+	Mutex sync.Mutex
 }
 
 func (db *DataBase) Execute(commands *Arr, password string) string {
