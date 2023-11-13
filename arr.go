@@ -1,6 +1,6 @@
 package containers
 
-type aNode struct {
+type aNode struct {   // массив сделан неправильно, я знаю
 	next *aNode
 	key  int
 	val  string

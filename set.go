@@ -2,7 +2,7 @@ package containers
 
 import "errors"
 
-type Set struct {
+type Set struct {           // также как хеш-таблица, но клуч = значние 
 	table [512]*setNode
 }
 
@@ -10,10 +10,10 @@ type setNode struct {
 	val string
 }
 
-func (set *Set) ADD(key string) error {
-	p := new(setNode)
+func (set *Set) ADD(key string) error { // нет циклов, все функции линейные => O(1)
+	p := new(setNode)					//обработка коллизии в сложность алгоритма не включаетcя
 	p.val = key
-	hash, err := calcHash(key, len(set.table))
+	hash, err := calcHash(key, len(set.table)) //хеш-функция в файле hash.go
 	if err != nil {
 		return errors.New("unacceptable key")
 	}
@@ -35,8 +35,8 @@ func (set *Set) ADD(key string) error {
 	}
 	return errors.New("table is full")
 }
-
-func (set *Set) Get(key string) (string, error) {
+/*
+func (set *Set) Get(key string) (string, error) { // нет циклов, все функции линейные => O(1)
 	hash, err := calcHash(key, len(set.table))
 	if err != nil {
 		return "", errors.New("unacceptable key")
@@ -51,9 +51,9 @@ func (set *Set) Get(key string) (string, error) {
 	}
 	return "", errors.New("no such key")
 }
-
-func (set *Set) Rem(key string) error {
-	hash, err := calcHash(key, len(set.table))
+*/
+func (set *Set) Rem(key string) error { // нет циклов, все функции линейные => O(1)
+	hash, err := calcHash(key, len(set.table)) //обработка коллизии в сложность алгоритма не включаетcя
 	if err != nil {
 		return errors.New("unacceptable key")
 	}
@@ -73,8 +73,8 @@ func (set *Set) Rem(key string) error {
 	return errors.New("no such key")
 }
 
-func (set *Set) IsMem(key string) bool {
-	hash, err := calcHash(key, len(set.table))
+func (set *Set) IsMem(key string) bool { // нет циклов, все функции линейные => O(1)
+	hash, err := calcHash(key, len(set.table)) //обработка коллизии в сложность алгоритма не включаетcя
 	if err != nil {
 		return false
 	}
