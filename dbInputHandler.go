@@ -30,6 +30,7 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 		{
 			if db.HashMap[password] == nil {
 				db.HashMap[password] = new(HashMap)
+				db.HashMap[password].CreateTable(512)
 			}
 		}
 	case 'S':

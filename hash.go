@@ -3,12 +3,16 @@ package containers
 import "errors"
 
 type HashMap struct {
-	table [512]*Pair
+	table []*Pair
 }
 
 type Pair struct {
 	key   string
 	value string
+}
+
+func (hmap *HashMap)CreateTable(n int){ // задает размер хеш-таблицы
+	hmap.table = make([]*Pair, n)
 }
 
 func calcHash(key string, size int) (int, error) {        // хэш - сумма utf-8 кодов символов строки
