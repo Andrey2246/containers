@@ -25,6 +25,15 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 	if command == "" {
 		return "no command"
 	}
+	if command == "HMAKE"{
+		ikey, err := strconv.Atoi(key)
+		if err != nil {
+			return key + " is not a number"
+		}
+		db.HashMap[password] = new(HashMap)
+		db.HashMap[password].CreateTable(ikey)
+		return "HashMap of size " + key + " created. If you already created one, it's gone :)"
+	}
 	switch command[0] {                        //создаем контейнер под используемый логин, если еще не создали (в го нет конструкторов)
 	case 'H':
 		{
@@ -58,7 +67,7 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 			}
 		}
 	}
-	switch command {                                   //здесь есть команды из лабы 1, ее еще пишу
+	switch command {                        //здесь есть команды из лабы 1, ее еще пишу
 	case "HSET":
 		{
 			if val == "" {
