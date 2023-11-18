@@ -84,7 +84,7 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 			if err != nil {
 				return err.Error()
 			} else {
-				return ("Value on key" + key + ":" + st)
+				return (st)
 			}
 		}
 	case "HDEL":
