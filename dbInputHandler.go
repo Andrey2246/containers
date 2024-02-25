@@ -6,26 +6,26 @@ import (
 )
 
 type DataBase struct {
-	Stack     map[string]*Stack
-	HashMap     map[string]*HashMap
-	Queue    map[string]*Queue
-	Set   map[string]*Set
-	BST    map[string]*Bst
-	Array    map[string]*Arr
-	Mutex sync.Mutex
+	Stack   map[string]*Stack
+	HashMap map[string]*HashMap
+	Queue   map[string]*Queue
+	Set     map[string]*Set
+	BST     map[string]*Bst
+	Array   map[string]*Arr
+	Mutex   sync.Mutex
 }
 
 func (db *DataBase) Execute(commands *Arr, password string) string {
 	command := commands.Get(0)
 	key := commands.Get(1)
 	val := commands.Get(2)
-	if command != "exit" && key == "" && command != "SPOP" && command != "QPOP"{
+	if command != "exit" && key == "" && command != "SPOP" && command != "QPOP" {
 		return "no key"
 	}
 	if command == "" {
 		return "no command"
 	}
-	if command == "HMAKE"{
+	if command == "HMAKE" {
 		ikey, err := strconv.Atoi(key)
 		if err != nil {
 			return key + " is not a number"
@@ -34,7 +34,7 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 		db.HashMap[password].CreateTable(ikey)
 		return "HashMap of size " + key + " created. If you already created one, it's gone :)"
 	}
-	switch command[0] {                        //создаем контейнер под используемый логин, если еще не создали (в го нет конструкторов)
+	switch command[0] { //создаем контейнер под используемый логин, если еще не создали (в го нет конструкторов)
 	case 'H':
 		{
 			if db.HashMap[password] == nil {
@@ -67,7 +67,7 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 			}
 		}
 	}
-	switch command {                        //здесь есть команды из лабы 1, ее еще пишу
+	switch command { //здесь есть команды из лабы 1, ее еще пишу
 	case "HSET":
 		{
 			if val == "" {
@@ -181,6 +181,18 @@ func (db *DataBase) Execute(commands *Arr, password string) string {
 				return "Your set contains value \"" + key + "\""
 			}
 			return "Your set does not contain value \"" + key + "\""
+		}
+	case "STEST":
+		{
+			ans, err := db.Stack[password].CheckBraces(key)
+			if err != nil {
+				return err.Error()
+			}
+			if ans {
+				return "Correct sequence of braces"
+			} else {
+				return "Not a correct sequence of braces"
+			}
 		}
 	case "exit":
 		{
