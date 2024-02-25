@@ -39,8 +39,9 @@ func (s *Stack) CheckBraces(str string) (bool, error) {
 			if (l != ")" || b != "(") && (l != "}" || b != "{") && (l != "]" || b != "[") {
 				return false, nil
 			}
+		} else {
+			s.Push(l)
 		}
-		s.Push(l)
 	}
 	return true, nil
 }
